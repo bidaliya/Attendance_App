@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "428323661782",
+    "firebase_url": "https://dynamic-health---doctors-default-rtdb.firebaseio.com",
+    "project_id": "dynamic-health---doctors",
+    "storage_bucket": "dynamic-health---doctors.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428323661782:android:66168b2de5d19bbe6ee677",
+        "android_client_info": {
+          "package_name": "com.example.dynamichealth_doctors"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428323661782-td347je8cmimr8065ehu7mchvbq59f5o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dynamichealth_doctors",
+            "certificate_hash": "e77c4e13ac6db328ebe8b573818647c9f7b5410f"
+          }
+        },
+        {
+          "client_id": "428323661782-91s70c8gbgvce9t75b8h5uekvorrra6o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACioKzSqjz0LTXwTC5fyKfHtgrVDKklZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428323661782-91s70c8gbgvce9t75b8h5uekvorrra6o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

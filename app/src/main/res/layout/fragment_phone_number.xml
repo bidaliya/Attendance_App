@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/White"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/inter_bold"
+            android:paddingTop="4dp"
+            android:text="W E L C O M E ...."
+            android:textColor="@color/Black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="375dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView2">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone_login_TIL"
+                style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:hint="Phone number"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/app_logo"
+                app:boxStrokeWidth="3dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="10"
+                app:endIconMode="clear_text"
+                app:errorContentDescription="Not a valid Email"
+                app:errorEnabled="true"
+                app:helperText="Required*"
+                app:helperTextTextColor="@color/Red"
+                app:hintTextColor="@color/app_logo"
+                app:prefixText="+91"
+                app:prefixTextColor="@color/Black"
+                app:startIconDrawable="@drawable/fui_ic_phone_white_24dp"
+                app:startIconTint="@color/black"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_login_TIEDT"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="phone"
+                    android:textColor="@color/Black"
+                    android:imeOptions="actionDone"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/verify_otp_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phone_login_TIL"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:text="Verify OTP"
+                android:textColor="@color/Black"
+                android:textSize="20sp"
+                android:visibility="gone" />
+
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/loginButton"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phone_login_TIL"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="65dp"
+                android:backgroundTint="@color/app_logo"
+                android:fontFamily="@font/inter_bold"
+                android:padding="10dp"
+                android:text="Login"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phone_login_TIL"
+                android:layout_centerHorizontal="true"
+                android:indeterminate="true"
+                android:layout_marginTop="4dp"
+                app:indicatorColor="#B462D6"
+                app:trackColor="@color/White"
+                app:trackThickness="5dp"
+                android:visibility="gone"/>
+
+            <!--        <TextView-->
+            <!--            android:id="@+id/OR"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:text="&#45;&#45;&#45;&#45;or&#45;&#45;&#45;&#45;"-->
+            <!--            android:fontFamily="@font/comfortaa_regular"-->
+            <!--            android:textSize="20sp"-->
+            <!--            android:layout_below="@id/loginButton1"-->
+            <!--            android:layout_centerHorizontal="true"-->
+            <!--            android:layout_marginTop="7dp"/>-->
+
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

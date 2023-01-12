@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/login_signup_navigation"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/phoneNumber"
+    >
+    <fragment
+        android:id="@+id/phoneNumber"
+        android:name="com.example.dynamichealth_doctors.LoginSignUp.PhoneNumber"
+        android:label="fragment_phone_number"
+        tools:layout="@layout/fragment_phone_number" >
+        <action
+            android:id="@+id/action_phoneNumber_to_phoneNumber_auth"
+            app:destination="@id/phoneNumber_auth"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/phoneNumber_auth"
+        android:name="com.example.dynamichealth_doctors.LoginSignUp.PhoneNumber_Auth"
+        android:label="fragment_phone_number_auth"
+        tools:layout="@layout/fragment_phone_number__auth" >
+    </fragment>
+
+</navigation>

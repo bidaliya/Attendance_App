@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".LoginSignUp.LoginActivity"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/White">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/verify_otp_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Verify OTP"
+            android:textSize="30sp"
+            android:textColor="@color/Black"
+            android:layout_marginTop="30dp"/>
+
+        <in.aabhasjindal.otptextview.OtpTextView
+            android:id="@+id/otp_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:layout_below="@id/verify_otp_TV"
+            android:textColor="@color/Black"
+            app:height="40dp"
+            app:width="40dp"
+            app:box_margin="5dp"
+            app:bar_enabled="true"
+            app:bar_height="2dp"
+            app:bar_active_color="@color/BlueViolet"
+            app:bar_inactive_color="@color/grey"
+            app:bar_success_color="#3BE33B"
+            app:bar_error_color="@color/IndianRed"
+            app:otp_box_background="@color/White"
+            app:otp_box_background_error="@color/Red"
+            app:length="6"
+            app:otp_text_size="24dp"
+            />
+        <!--            app:otp="123456"-->
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/otp_view"
+            android:indeterminate="true"
+            android:layout_marginTop="4dp"
+            app:indicatorColor="#B462D6"
+            app:trackColor="@color/White"
+            app:trackThickness="5dp"
+            android:visibility="gone"/>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/otp_verifyBTN"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/otp_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:fontFamily="@font/inter_bold"
+            android:padding="5dp"
+            android:text="Verify"
+            android:textAlignment="center"
+            android:textColor="@color/White"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/app_logo"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlayExtended"
+            />
+
+    </RelativeLayout>
+
+</FrameLayout>
