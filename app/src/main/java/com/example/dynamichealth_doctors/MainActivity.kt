@@ -80,7 +80,6 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //doctor_name_search_ACT = binding.collegeAutoCompleteTV
-
         permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
                 permissions ->
             isReadRequestGranted = permissions[Manifest.permission.READ_EXTERNAL_STORAGE]?: isReadRequestGranted
@@ -92,7 +91,7 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
 
         Log.d("MainActivityStart", "Main activity Started")
         doc_name_TV = binding.docNameTV
-        attendence_timing_ACT = binding.timingsAutoCompleteTV;
+        attendence_timing_ACT = binding.timingsAutoCompleteTV
         progressbar = binding.locationFetchingProgressbar
         submit_btn = binding.submitBtn
         reset_btn = binding.resetBtn
@@ -101,6 +100,7 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
         val sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         doc_name = sharedPreferences.getString(tenant_name, "")
         doc_uid = sharedPreferences.getString(tenant_phone, "")
+        Log.d("MainActivityStart", doc_uid.toString())
 
 
         doc_name_TV.text = doc_name
@@ -131,7 +131,6 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
         // buttons click handling
         submit_btn.setOnClickListener {
             progressbar.visibility = View.VISIBLE
-            Log.d("First", "First")
             getSummary()
 
         }
@@ -140,7 +139,7 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
             //doctor_name_search_ACT.setText(null)
             doc_name = ""
             doc_Timing = ""
-            attendence_timing_ACT.setText(null)
+            attendence_timing_ACT.text = null
             doc_signature_btimap = null
             signatureView.clear()
         }
@@ -215,11 +214,11 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
                     bundle.putString("id", doc_uid)
                     bundle.putString("timing", doc_Timing)
                     bundle.putParcelable("doc_sign_bitmap",doc_signature_btimap)
-                    confirmationDialog.setArguments(bundle)
+                    confirmationDialog.arguments = bundle
                     confirmationDialog.show(supportFragmentManager,"confirmationDialog" )
                     //doctor_name_search_ACT.setText(null)
                     doc_Timing = ""
-                    attendence_timing_ACT.setText(null)
+                    attendence_timing_ACT.text = null
                     doc_signature_btimap = null
                     signatureView.clear()
 
@@ -239,29 +238,29 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
         return super.dispatchTouchEvent(ev)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        val removeTask = fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-        removeTask.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d(TAG, "Location Callback removed.")
-            } else {
-                Log.d(TAG, "Failed to remove Location Callback.")
-            }
-        }
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        val removeTask = fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-        removeTask.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d(TAG, "Location Callback removed.")
-            } else {
-                Log.d(TAG, "Failed to remove Location Callback.")
-            }
-        }
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        val removeTask = fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+//        removeTask.addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                Log.d(TAG, "Location Callback removed.")
+//            } else {
+//                Log.d(TAG, "Failed to remove Location Callback.")
+//            }
+//        }
+//    }
+//
+//    override fun onDetachedFromWindow() {
+//        super.onDetachedFromWindow()
+//        val removeTask = fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+//        removeTask.addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                Log.d(TAG, "Location Callback removed.")
+//            } else {
+//                Log.d(TAG, "Failed to remove Location Callback.")
+//            }
+//        }
+//    }
 
 }
 

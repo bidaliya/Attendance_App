@@ -34,7 +34,6 @@ class PhoneNumber : Fragment() {
     // TODO: Rename and change types of parameters
 
     private var binding: FragmentPhoneNumberBinding? = null
-
     private lateinit var login_btn: ExtendedFloatingActionButton
     private lateinit var phone_TIL: TextInputLayout
     private lateinit var phone_TIEDT: TextInputEditText
@@ -46,6 +45,10 @@ class PhoneNumber : Fragment() {
 
     private lateinit var mContext: Context
 
+    private val SHARED_PREFS = "sharedPrefs"
+    private val tenant_name = "tenantName"
+    private val tenant_id = "tenantId"
+    private val tenant_phone = "tenantPhone"
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
@@ -53,12 +56,22 @@ class PhoneNumber : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        Log.d("InsideOnStart", "onStart: ")
+        val sharedPreferences = mContext.getSharedPreferences(SHARED_PREFS, AppCompatActivity.MODE_PRIVATE)
         val currentUser = mAuth.currentUser
         if (currentUser != null) {
-            val intent = Intent(requireActivity(), MainActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+            if (!TextUtils.isEmpty(sharedPreferences.getString(tenant_id, "") )) {
+                Log.d("InsideOnStartShared", "${sharedPreferences.getString(tenant_id, "")}")
+                val intent = Intent(mContext, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                Log.d("nameFromPhoneNumber", sharedPreferences.getString(tenant_name, "").toString())
+                startActivity(intent)
+
+            }
+            mAuth.signOut()
+
         }
+
     }
 
     override fun onCreateView(
@@ -82,88 +95,95 @@ class PhoneNumber : Fragment() {
         progressIndicator.visibility = View.VISIBLE
 
         if (isAdded) {
-            progressIndicator.visibility = View.GONE
-            mCallbacks = object : OnVerificationStateChangedCallbacks() {
+            val sharedPreferences = mContext.getSharedPreferences(SHARED_PREFS, AppCompatActivity.MODE_PRIVATE)
+            if (!TextUtils.isEmpty(sharedPreferences.getString(tenant_phone, "") )) {
+                val intent = Intent(mContext, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                Log.d("nameFromLogin", sharedPreferences.getString(tenant_name, "").toString())
+                startActivity(intent)
+            }
 
-                @SuppressLint("LongLogTag")
-                override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                    // This callback will be invoked in two situations:
-                    // 1 - Instant verification. In some cases the phone number can be instantly
-                    //     verified without needing to send or enter a verification code.
-                    // 2 - Auto-retrieval. On some devices Google Play services can automatically
-                    //     detect the incoming verification SMS and perform verification without
-                    //     user action.
-                    Log.d("On Verification Completed", "onVerificationCompleted:$credential")
-                    //signInWithPhoneAuthCredential(credential)
-                    progressIndicator.visibility = View.GONE
-                }
+            else{
+                progressIndicator.visibility = View.GONE
+                mCallbacks = object : OnVerificationStateChangedCallbacks() {
 
-                @SuppressLint("LongLogTag")
-                override fun onVerificationFailed(e: FirebaseException) {
-                    Log.w("On Verification Completed", "onVerificationFailed", e)
-                    if (e is FirebaseAuthInvalidCredentialsException) {
-                        // Invalid request
-                        Toast.makeText(mContext, "Invalid Request", Toast.LENGTH_SHORT).show()
-                    } else if (e is FirebaseTooManyRequestsException) {
-                        // The SMS quota for the project has been exceeded
-                        Toast.makeText(
-                            mContext,
-                            "The SMS quota for the project has been exceeded",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    @SuppressLint("LongLogTag")
+                    override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                        // This callback will be invoked in two situations:
+                        // 1 - Instant verification. In some cases the phone number can be instantly
+                        //     verified without needing to send or enter a verification code.
+                        // 2 - Auto-retrieval. On some devices Google Play services can automatically
+                        //     detect the incoming verification SMS and perform verification without
+                        //     user action.
+                        Log.d("On Verification Completed", "onVerificationCompleted:$credential")
+                        //signInWithPhoneAuthCredential(credential)
+                        progressIndicator.visibility = View.GONE
                     }
-                    progressIndicator.visibility = View.GONE
+
+                    @SuppressLint("LongLogTag")
+                    override fun onVerificationFailed(e: FirebaseException) {
+                        Log.w("On Verification Completed", "onVerificationFailed", e)
+                        if (e is FirebaseAuthInvalidCredentialsException) {
+                            // Invalid request
+                            Toast.makeText(mContext, "Invalid Request", Toast.LENGTH_SHORT).show()
+                        } else if (e is FirebaseTooManyRequestsException) {
+                            // The SMS quota for the project has been exceeded
+                            Toast.makeText(
+                                mContext,
+                                "The SMS quota for the project has been exceeded",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        progressIndicator.visibility = View.GONE
+                    }
+
+                    override fun onCodeSent(
+                        verificationID: String,
+                        forceResendingToken: PhoneAuthProvider.ForceResendingToken
+                    ) {
+                        // When the code is send to user, we get a verification id...now in the next step, we will send the code(from user) and the
+                        // verification id to the firebase to get the authentication done.
+                        Toast.makeText(context, "Code Send", Toast.LENGTH_SHORT).show()
+
+                        val bundle = Bundle()
+                        bundle.putString("verificationID", verificationID)
+                        view.findNavController().navigate(
+                            com.example.dynamichealth_doctors.R.id.action_phoneNumber_to_phoneNumber_auth,
+                            bundle
+                        )
+                    }
                 }
+                login_btn.setOnClickListener {
+                    progressIndicator.visibility = View.VISIBLE
+                    phone_TIEDT.isCursorVisible = false
+                    val phone_number_entered = phone_TIEDT.text.toString()
+                    // valid phone number
+                    Log.d("phone number entered", "" + phone_number_entered)
 
-                override fun onCodeSent(
-                    verificationID: String,
-                    forceResendingToken: PhoneAuthProvider.ForceResendingToken
-                ) {
-                    // When the code is send to user, we get a verification id...now in the next step, we will send the code(from user) and the
-                    // verification id to the firebase to get the authentication done.
-                    Toast.makeText(context, "Code Send", Toast.LENGTH_SHORT).show()
-
-                    val bundle = Bundle()
-                    bundle.putString("verificationID", verificationID)
-                    view.findNavController().navigate(
-                        com.example.dynamichealth_doctors.R.id.action_phoneNumber_to_phoneNumber_auth,
-                        bundle
-                    )
+                    if (!TextUtils.isEmpty(phone_number_entered) && phone_number_entered.length == 10) {
+                        val options = PhoneAuthOptions.newBuilder(mAuth)
+                            .setPhoneNumber("+91".plus(phone_number_entered))       // Phone number to verify
+                            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                            .setActivity(requireActivity())                 // Activity (for callback binding)
+                            .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                            .build()
+                        PhoneAuthProvider.verifyPhoneNumber(options)
+                    } else {
+                        progressIndicator.visibility = View.VISIBLE
+                        Toast.makeText(context, "Please Enter valid Phone number", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
-            login_btn.setOnClickListener {
-                progressIndicator.visibility = View.VISIBLE
-                phone_TIEDT.isCursorVisible = false
-                val phone_number_entered = phone_TIEDT.text.toString()
-                // valid phone number
-                Log.d("phone number entered", "" + phone_number_entered)
 
-                if (!TextUtils.isEmpty(phone_number_entered) && phone_number_entered.length == 10) {
-                    val options = PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber("+91".plus(phone_number_entered))       // Phone number to verify
-                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                        .setActivity(requireActivity())                 // Activity (for callback binding)
-                        .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
-                        .build()
-                    PhoneAuthProvider.verifyPhoneNumber(options)
-                } else {
-                    Toast.makeText(context, "Please Enter valid Phone number", Toast.LENGTH_SHORT).show()
-                }
-            }
+
         }
 
     }
 
-    private fun Fragment.hideKeyboard() {
-        view?.let { activity?.hideKeyboard(it) }
-    }
-
-//    private fun Activity.hideKeyboard() {
-//        hideKeyboard(currentFocus ?: View(this))
-//    }
-
     fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
@@ -172,4 +192,7 @@ class PhoneNumber : Fragment() {
         super.onDestroyView()
         binding = null
     }
+
+
+
 }

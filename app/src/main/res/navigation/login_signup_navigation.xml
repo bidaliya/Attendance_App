@@ -25,6 +25,15 @@
         android:name="com.example.dynamichealth_doctors.LoginSignUp.PhoneNumber_Auth"
         android:label="fragment_phone_number_auth"
         tools:layout="@layout/fragment_phone_number__auth" >
+        <!-- popUpTo will pop out all the fragments till "login_signup_navigation"   -->
+        <action
+            android:id="@+id/action_phoneNumber_auth_to_phoneNumber"
+            app:destination="@id/phoneNumber"
+            app:popUpTo="@+id/login_signup_navigation"
+            app:popUpToInclusive="true"
+
+            />
     </fragment>
 
 </navigation>
+

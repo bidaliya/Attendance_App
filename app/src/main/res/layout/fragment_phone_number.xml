@@ -52,7 +52,7 @@
                 app:counterEnabled="true"
                 app:counterMaxLength="10"
                 app:endIconMode="clear_text"
-                app:errorContentDescription="Not a valid Email"
+                app:errorContentDescription="Not a valid Phone"
                 app:errorEnabled="true"
                 app:helperText="Required*"
                 app:helperTextTextColor="@color/Red"

@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore.Images.Media.insertImage
+import android.util.Log
 import android.view.*
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -138,7 +139,7 @@ class ConfirmationDialog : DialogFragment() {
                                                 doc_sign_bitmap!!
                                             )
                                             Firebase.storage.reference
-                                                .child("$doc_id/${attendance_date.text}/IN/doc_sign.jpg")
+                                                .child("Doctors_Attendance/$doc_id/${attendance_date.text}/IN/doc_sign.jpg")
                                                 .putBytes(uri, storageMetadata {
                                                     contentType = "${address}"
                                                 }).await()
@@ -158,7 +159,7 @@ class ConfirmationDialog : DialogFragment() {
                                 }
 
                                 override fun onCancelled(error: DatabaseError) {
-                                    TODO("Not yet implemented")
+                                    Log.d("exception1", error.toString())
                                 }
 
                             })
@@ -190,7 +191,7 @@ class ConfirmationDialog : DialogFragment() {
                                                 doc_sign_bitmap!!
                                             )
                                             Firebase.storage.reference
-                                                .child("$doc_id/${attendance_date.text}/OUT/doc_sign.jpg")
+                                                .child("Doctors_Attendance/$doc_id/${attendance_date.text}/OUT/doc_sign.jpg")
                                                 .putBytes(uri, storageMetadata {
                                                     contentType = "${address}"
                                                 }).await()
@@ -209,7 +210,7 @@ class ConfirmationDialog : DialogFragment() {
                                 }
 
                                 override fun onCancelled(error: DatabaseError) {
-                                    TODO("Not yet implemented")
+                                    Log.d("exception2", error.toString())
                                 }
 
                             })
@@ -244,7 +245,6 @@ class ConfirmationDialog : DialogFragment() {
 
     override fun onDetach() {
         super.onDetach()
-
     }
 }
 
